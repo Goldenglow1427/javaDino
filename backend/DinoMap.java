@@ -48,6 +48,8 @@ public class DinoMap
             cactus.x -= SPEED;
             if (cactus.x + cactus.width < 0) {
                 toRemove.add(cactus);
+                points++;
+                System.out.println(points);
             }
         }
         cacti.removeAll(toRemove);
@@ -71,8 +73,6 @@ public class DinoMap
                 falling = false;
                 dinoYVelocity = 0;
                 dino.y = GROUND_HEIGHT - 50;
-                points++;
-                // System.out.println(points);
                 updateSPEED();
             }
         }
