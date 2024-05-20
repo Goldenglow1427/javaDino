@@ -1,11 +1,15 @@
 package userInterface;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import backend.DinoMap;
@@ -18,9 +22,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private final int PANEL_HEIGHT = 300;
     private final int GROUND_HEIGHT = 250;
 
-    private int dinoYVelocity = 0;
-
     private DinoMap be;
+
+    private BufferedImage kanImage;
+    private BufferedImage plantImage;
 
     public GamePanel()
     {
@@ -34,6 +39,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         // cacti.add(new Rectangle(PANEL_WIDTH, GROUND_HEIGHT - 40, 40, 40));
 
         be = new DinoMap();
+
+        try
+        {
+            File path1 = new File("userInterface\\images", "kangaroo.jpg");
+            File path2 = new File("userInterface\\images", "plant.jpg");
+
+            // System.err.println(path1.getAbsolutePath());
+
+            kanImage = ImageIO.read(path1);
+            plantImage = ImageIO.read(path2);
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex + "\nFailed to capture the kangaroo clipart!");
+        }
 
         timer = new Timer(20, this);
         timer.start();
@@ -51,14 +71,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         g.setColor(Color.BLUE);
 
         Rectangle dino = be.getDino();
-        g.fillRect(dino.x, dino.y, dino.width, dino.height);
+        g.drawImage(kanImage, dino.x, dino.y, this);
+        // g.fillRect(dino.x, dino.y, dino.width, dino.height);
         
         // Draw cacti
         ArrayList<Rectangle> cacti = be.getCactus();
         g.setColor(Color.GREEN);
-        for (Rectangle cactus : cacti) {
-            g.fillRect(cactus.x, cactus.y, cactus.width, cactus.height);
-        }
+        for(Rectangle cactus: cacti)
+            g.drawImage(plantImage, cactus.x, cactus.y, this);
+            // g.fillRect(cactus.x, cactus.y, cactus.width, cactus.height);
+
+        // Draw points
+        g.setColor(Color.BLUE);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
+        g.drawString(String.format("Score: %d", be.getPoints()), 10, 20);
     }
 
     @Override
@@ -73,30 +100,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         be.addNewCactus();
 
         // Check for collisions
-        if (be.checkCollision()) {
+        if(be.checkCollision())
+        {
             timer.stop();
             JOptionPane.showMessageDialog(this, "Game Over!");
             System.exit(0);
         }
-
+        
         repaint();
     }
 
-    // private void addCactus() {
-    //     int positionX = PANEL_WIDTH + new Random().nextInt(200);
-    //     cacti.add(new Rectangle(positionX, GROUND_HEIGHT - 40, 40, 40));
-    // }
-
     @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE && be.isGround()) {
+    public void keyPressed(KeyEvent e)
+    {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE && be.isGround())
             be.setJumping();
-        }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e){}
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e){}
 }

@@ -20,4 +20,5 @@ For the front end (userInterface):
 For the back end (backend):
 
 - [ ] Make the modification so that people can restart the game;
+- [ ] Increasing speed;
 
