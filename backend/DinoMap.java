@@ -90,6 +90,11 @@ public class DinoMap
         }
     }
 
+    public int getLives()
+    {
+        return 1;
+    }
+
     public void addNewCactus()
     {
         if (cacti.isEmpty() || cacti.get(cacti.size() - 1).x < 600) {
@@ -108,14 +113,14 @@ public class DinoMap
         return this.cacti;
     }
 
-    public boolean checkCollision()
+    public int checkCollision()
     {
         for (Rectangle cactus : cacti) {
             if (dino.intersects(cactus)) {
-                return true;
+                return 1;
             }
         }
-        return false;
+        return 0;
     }
 
     public Rectangle getDino()
