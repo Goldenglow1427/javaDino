@@ -18,8 +18,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private final int PANEL_HEIGHT = 300;
     private final int GROUND_HEIGHT = 250;
 
-    private int dinoYVelocity = 0;
-
     private DinoMap be;
 
     public GamePanel()
@@ -56,9 +54,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         // Draw cacti
         ArrayList<Rectangle> cacti = be.getCactus();
         g.setColor(Color.GREEN);
-        for (Rectangle cactus : cacti) {
+        for(Rectangle cactus: cacti)
             g.fillRect(cactus.x, cactus.y, cactus.width, cactus.height);
-        }
     }
 
     @Override
@@ -73,30 +70,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         be.addNewCactus();
 
         // Check for collisions
-        if (be.checkCollision()) {
+        if(be.checkCollision())
+        {
             timer.stop();
             JOptionPane.showMessageDialog(this, "Game Over!");
             System.exit(0);
         }
-
+        
         repaint();
     }
 
-    // private void addCactus() {
-    //     int positionX = PANEL_WIDTH + new Random().nextInt(200);
-    //     cacti.add(new Rectangle(positionX, GROUND_HEIGHT - 40, 40, 40));
-    // }
-
     @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE && be.isGround()) {
+    public void keyPressed(KeyEvent e)
+    {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE && be.isGround())
             be.setJumping();
-        }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e){}
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e){}
 }
