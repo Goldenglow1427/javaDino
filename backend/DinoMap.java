@@ -21,9 +21,13 @@ public class DinoMap
 
     private int dinoYVelocity = 0;
 
-    private int SPEED = 8;
+    private final int initialSPEED = 8;
+    private int SPEED = initialSPEED;
     private int points = 0;
-
+    private int lives = 100;
+    private int status = 0;
+    private int initialCounter = 20;
+    private int counter = initialCounter; //frames for time between lives
     public DinoMap()
     {
         dino = new Rectangle(50, GROUND_HEIGHT - 50, 50, 50);
@@ -49,7 +53,7 @@ public class DinoMap
             if (cactus.x + cactus.width < 0) {
                 toRemove.add(cactus);
                 points++;
-                System.out.println(points);
+//                System.out.println(points);
             }
         }
         cacti.removeAll(toRemove);
@@ -92,12 +96,13 @@ public class DinoMap
 
     public int getLives()
     {
-        return 1;
+        return lives;
     }
 
     public void addNewCactus()
     {
-        if (cacti.isEmpty() || cacti.get(cacti.size() - 1).x < 600) {
+        if(counter>0) counter--;
+        else if (cacti.isEmpty() || cacti.get(cacti.size() - 1).x < 600) {
             addCactus();
         }
     }
@@ -117,12 +122,32 @@ public class DinoMap
     {
         for (Rectangle cactus : cacti) {
             if (dino.intersects(cactus)) {
-                return 1;
+                if(lives>1){
+                    lives--;
+                    clearAll();
+                    return 1;
+                }
+                return -1;
             }
+
         }
         return 0;
     }
 
+    public void clearAll(){
+        ArrayList<Rectangle> toRemove = new ArrayList<>();
+        for (Rectangle cactus : cacti)
+        {
+            toRemove.add(cactus);
+
+        }
+        cacti.removeAll(toRemove);
+//        SPEED=0;
+        counter = initialCounter;
+    }
+    public void reset(){
+        SPEED = initialSPEED;
+    }
     public Rectangle getDino()
     {
         return this.dino;
