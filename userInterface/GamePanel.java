@@ -1,11 +1,15 @@
 package userInterface;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import backend.DinoMap;
@@ -20,6 +24,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
     private DinoMap be;
 
+    private BufferedImage kanImage;
+
     public GamePanel()
     {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
@@ -32,6 +38,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         // cacti.add(new Rectangle(PANEL_WIDTH, GROUND_HEIGHT - 40, 40, 40));
 
         be = new DinoMap();
+
+        try
+        {
+            File path1 = new File("userInterface\\images", "kangaroo.jpg");
+
+            // System.err.println(path1.getAbsolutePath());
+
+            kanImage = ImageIO.read(path1);
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex + "\nFailed to capture the kangaroo clipart!");
+        }
 
         timer = new Timer(20, this);
         timer.start();
@@ -49,7 +68,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         g.setColor(Color.BLUE);
 
         Rectangle dino = be.getDino();
-        g.fillRect(dino.x, dino.y, dino.width, dino.height);
+        g.drawImage(kanImage, dino.x, dino.y, this);
+        // g.fillRect(dino.x, dino.y, dino.width, dino.height);
         
         // Draw cacti
         ArrayList<Rectangle> cacti = be.getCactus();
