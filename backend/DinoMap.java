@@ -22,6 +22,7 @@ public class DinoMap
     private int dinoYVelocity = 0;
 
     private final int SPEED = 10;
+    private int points = 0;
 
     public DinoMap()
     {
@@ -112,5 +113,8 @@ public class DinoMap
     public Rectangle getDino()
     {
         return this.dino;
+    }
+    public int getPoints(){
+        return points;
     }
 }
