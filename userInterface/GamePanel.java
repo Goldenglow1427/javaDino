@@ -42,8 +42,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
         try
         {
-            File path1 = new File("userInterface\\images", "kangaroo.jpg");
-            File path2 = new File("userInterface\\images", "plant.jpg");
+            File path1, path2;
+            if(System.getProperty("os.name").indexOf("Windows") != -1)
+            {
+                path1 = new File("userInterface\\images", "kangaroo.jpg");
+                path2 = new File("userInterface\\images", "plant.jpg");
+            }
+            else
+            {
+                path1 = new File("userInterface/images", "kangaroo.jpg");
+                path2 = new File("userInterface/images", "plant.jpg");
+            }
 
             // System.err.println(path1.getAbsolutePath());
 
