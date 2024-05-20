@@ -21,13 +21,14 @@ public class DinoMap
 
     private int dinoYVelocity = 0;
 
-    private final int SPEED = 10;
+    private int SPEED = 8;
+    private int points = 0;
 
     public DinoMap()
     {
         dino = new Rectangle(50, GROUND_HEIGHT - 50, 50, 50);
         cacti = new ArrayList<>();
-        cacti.add(new Rectangle(PANEL_WIDTH, GROUND_HEIGHT - 40, 40, 40));
+        cacti.add(new Rectangle(PANEL_WIDTH, GROUND_HEIGHT - 40, 13, 40));
     }
 
     public boolean isGround()
@@ -70,6 +71,9 @@ public class DinoMap
                 falling = false;
                 dinoYVelocity = 0;
                 dino.y = GROUND_HEIGHT - 50;
+                points++;
+                // System.out.println(points);
+                updateSPEED();
             }
         }
 
@@ -79,6 +83,11 @@ public class DinoMap
     public void setJumping()
     {
         this.jumping = true;
+    }
+    public void updateSPEED(){
+        if(points%6==3){
+            SPEED++;
+        }
     }
 
     public void addNewCactus()
@@ -91,7 +100,7 @@ public class DinoMap
     private void addCactus()
     {
         int positionX = PANEL_WIDTH + new Random().nextInt(200);
-        cacti.add(new Rectangle(positionX, GROUND_HEIGHT - 40, 40, 40));
+        cacti.add(new Rectangle(positionX, GROUND_HEIGHT - 40, 13, 40));
     }
 
     public ArrayList<Rectangle> getCactus()
@@ -112,5 +121,8 @@ public class DinoMap
     public Rectangle getDino()
     {
         return this.dino;
+    }
+    public int getPoints() {
+        return points;
     }
 }
