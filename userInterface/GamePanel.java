@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         be.addNewCactus();
 
         // Check for collisions
-        if(be.checkCollision())
+        if(be.checkCollision()==-1)
         {
             timer.stop();
             JOptionPane.showMessageDialog(this, "Game Over!");
