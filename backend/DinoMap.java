@@ -21,11 +21,8 @@ public class DinoMap
 
     private int dinoYVelocity = 0;
 
-    private final int initialSPEED = 8;
-    private int SPEED = initialSPEED;
+    private int SPEED = 8;
     private int points = 0;
-    private int status = 0;
-    private int lives = 100;
 
     public DinoMap()
     {
@@ -93,6 +90,11 @@ public class DinoMap
         }
     }
 
+    public int getLives()
+    {
+        return 1;
+    }
+
     public void addNewCactus()
     {
         if (cacti.isEmpty() || cacti.get(cacti.size() - 1).x < 600) {
@@ -110,35 +112,16 @@ public class DinoMap
     {
         return this.cacti;
     }
-    public void clearAll(){
-        ArrayList<Rectangle> toRemove = new ArrayList<>();
-        for (Rectangle cactus : cacti)
-        {
-            toRemove.add(cactus);
-        }
-        cacti.removeAll(toRemove);
-        SPEED=0;
-        System.out.println(lives);
-    }
-//    public void restart(){
-//
-//    }
 
-    public int checkCollision() // 0 not collision, 1 more lives, -1 gg dead
+    public int checkCollision()
     {
         for (Rectangle cactus : cacti) {
             if (dino.intersects(cactus)) {
-                if(lives>1){
-                    lives--;
-                    clearAll();
-                    return 1;
-                }
-                return -1; // ggs haha
+                return 1;
             }
         }
         return 0;
     }
-
 
     public Rectangle getDino()
     {
@@ -146,8 +129,5 @@ public class DinoMap
     }
     public int getPoints() {
         return points;
-    }
-    public int getLives(){
-        return lives;
     }
 }

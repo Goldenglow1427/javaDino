@@ -90,10 +90,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
             g.drawImage(plantImage, cactus.x, cactus.y, this);
             // g.fillRect(cactus.x, cactus.y, cactus.width, cactus.height);
 
+        
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
+
+        // Draw lives.
+        g.setColor(Color.RED);
+        g.drawString(String.format("Remaining Lives: %d", be.getLives()), PANEL_WIDTH-130, 20);
+
         // Draw points
         g.setColor(Color.BLUE);
-
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         g.drawString(String.format("Score: %d", be.getPoints()), 10, 20);
     }
 
@@ -109,7 +114,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         be.addNewCactus();
 
         // Check for collisions
-        if(be.checkCollision()==-1)
+        if(be.checkCollision() == -1)
         {
             timer.stop();
             JOptionPane.showMessageDialog(this, "Game Over!");
