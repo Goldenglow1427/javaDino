@@ -77,15 +77,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         // Draw cacti
         ArrayList<Rectangle> cacti = be.getCactus();
         g.setColor(Color.GREEN);
-        for(Rectangle cactus: cacti)
-            g.drawImage(plantImage, cactus.x, cactus.y, this);
-            // g.fillRect(cactus.x, cactus.y, cactus.width, cactus.height);
-
-        // Draw points
-        g.setColor(Color.BLUE);
-
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
-        g.drawString(String.format("Score: %d", be.getPoints()), 10, 20);
+        for (Rectangle cactus : cacti) {
+            g.fillRect(cactus.x, cactus.y, cactus.width, cactus.height);
+        }
     }
 
     @Override
