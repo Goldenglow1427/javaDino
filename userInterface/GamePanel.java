@@ -152,8 +152,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
             
             if(opt == 1)
                 System.exit(0);
-            else
+            else {
                 be.reset();
+                timer.start();
+            }
         }
         
         repaint();
