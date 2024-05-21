@@ -27,12 +27,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private BufferedImage kanImage;
     private BufferedImage plantImage;
 
+    private int flashCounter = 0;
+    private boolean[] flashStatus;
+
     public GamePanel()
     {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.WHITE);
         this.setFocusable(true);
         this.addKeyListener(this);
+
+        flashStatus = new boolean[40];
+        for(int i=1; i<=5; i++)
+            flashStatus[i] = true;
+        for(int i=11; i<=15; i++)
+            flashStatus[i] = true;
+        for(int i=21; i<=25; i++)
+            flashStatus[i] = true;
+        for(int i=31; i<=35; i++)
+            flashStatus[i] = true;
 
         // dino = new Rectangle(50, GROUND_HEIGHT - 50, 50, 50);
         // cacti = new ArrayList<>();
@@ -71,6 +84,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+
+        if(this.flashCounter > 0)
+        {
+            this.flashCounter--;
+            if(flashStatus[this.flashCounter+1] == true)
+                return;
+        }
 
         // Draw ground
         g.setColor(Color.BLACK);
@@ -114,11 +134,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         be.addNewCactus();
 
         // Check for collisions
-        if(be.checkCollision() == -1)
+        if(be.checkCollision() == 1)
         {
-            timer.stop();
-            JOptionPane.showMessageDialog(this, "Game Over!");
-            System.exit(0);
+            String[] options = {"restart", "quit"};
+
+            flashCounter = 37;
+
+            // timer.stop();
+            // JOptionPane.showMessageDialog(this, "Game Over!");
+            // System.exit(0);
         }
         
         repaint();
