@@ -21,7 +21,7 @@ public class DinoMap
 
     private int dinoYVelocity = 0;
 
-    private final int initialSPEED = 8;
+    private final int initialSPEED = 12;
     private int SPEED = initialSPEED;
     private int points = 0;
     private int cactiCounter = 0;
@@ -55,7 +55,7 @@ public class DinoMap
                 toRemove.add(cactus);
                 points++;
                 cactiCounter++;
-                if(cactiCounter == 5%8) SPEED++;
+                if(cactiCounter%8 == 5) SPEED++;
 //                System.out.println(points);
             }
         }
@@ -112,7 +112,7 @@ public class DinoMap
 
     private void addCactus()
     {
-        int positionX = PANEL_WIDTH + new Random().nextInt(200 + (SPEED*3));
+        int positionX = PANEL_WIDTH + new Random().nextInt(200 + (SPEED*6));
         cacti.add(new Rectangle(positionX, GROUND_HEIGHT - 40, 13, 40));
     }
 
