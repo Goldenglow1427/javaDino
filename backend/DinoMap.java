@@ -24,7 +24,7 @@ public class DinoMap
     private final int initialSPEED = 8;
     private int SPEED = initialSPEED;
     private int points = 0;
-    private int lives = 100;
+    private int lives = 5;
     private int status = 0;
     private int initialCounter = 20;
     private int counter = initialCounter; //frames for time between lives

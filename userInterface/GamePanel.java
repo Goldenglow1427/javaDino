@@ -30,6 +30,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private int flashCounter = 0;
     private boolean[] flashStatus;
 
+    private final boolean developerMode = true;
+
     public GamePanel()
     {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
@@ -136,13 +138,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         // Check for collisions
         if(be.checkCollision() == 1)
         {
-            String[] options = {"restart", "quit"};
-
             flashCounter = 37;
 
-            // timer.stop();
+        }
+        else if(be.checkCollision() == -1)
+        {
+            String[] options = {"Restart", "Quit"};
+
+            timer.stop();
             // JOptionPane.showMessageDialog(this, "Game Over!");
-            // System.exit(0);
+            int opt = JOptionPane.showOptionDialog(this, "Select One:", 
+            "Sadly you have died :(", 0, 3, null, options, options[0]);
+            
+            if(opt == 1)
+                System.exit(0);
+            else
+                be.reset();
         }
         
         repaint();
@@ -156,7 +167,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     }
 
     @Override
-    public void keyReleased(KeyEvent e){}
+    public void keyReleased(KeyEvent e)
+    {
+    }
 
     @Override
     public void keyTyped(KeyEvent e){}
