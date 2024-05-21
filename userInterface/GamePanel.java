@@ -26,11 +26,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
     private BufferedImage kanImage;
     private BufferedImage plantImage;
+    private BufferedImage heartImage;
 
     private int flashCounter = 0;
     private boolean[] flashStatus;
 
-    private final boolean developerMode = true;
+    // private final boolean developerMode = true;
 
     public GamePanel()
     {
@@ -57,22 +58,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
         try
         {
-            File path1, path2;
+            File path1, path2, path3;
             if(System.getProperty("os.name").indexOf("Windows") != -1)
             {
                 path1 = new File("userInterface\\images", "kangaroo.jpg");
                 path2 = new File("userInterface\\images", "plant.jpg");
+                path3 = new File("userInterface\\images", "heart20.jpg");
             }
             else
             {
                 path1 = new File("userInterface/images", "kangaroo.jpg");
                 path2 = new File("userInterface/images", "plant.jpg");
+                path3 = new File("userInterface/images", "heart20.jpg");
             }
 
             // System.err.println(path1.getAbsolutePath());
 
             kanImage = ImageIO.read(path1);
             plantImage = ImageIO.read(path2);
+            heartImage = ImageIO.read(path3);
         }
         catch(IOException ex)
         {
@@ -117,7 +121,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
         // Draw lives.
         g.setColor(Color.RED);
-        g.drawString(String.format("Remaining Lives: %d", be.getLives()), PANEL_WIDTH-130, 20);
+        for(int i=1; i<=be.getLives(); i++)
+            g.drawImage(heartImage, PANEL_WIDTH-i*23-10, 10, this );
+        // g.drawString(String.format("Remaining Lives: %d", be.getLives()), PANEL_WIDTH-130, 20);
 
         // Draw points
         g.setColor(Color.BLUE);
@@ -137,10 +143,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
 
         // Check for collisions
         if(be.checkCollision() == 1)
-        {
             flashCounter = 37;
-
-        }
         else if(be.checkCollision() == -1)
         {
             String[] options = {"Restart", "Quit"};
