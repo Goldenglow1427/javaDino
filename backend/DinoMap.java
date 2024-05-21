@@ -112,7 +112,7 @@ public class DinoMap
 
     private void addCactus()
     {
-        int positionX = PANEL_WIDTH + new Random().nextInt(200 + (SPEED*2));
+        int positionX = PANEL_WIDTH + new Random().nextInt(200 + (SPEED*3));
         cacti.add(new Rectangle(positionX, GROUND_HEIGHT - 40, 13, 40));
     }
 
